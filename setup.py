@@ -6,7 +6,7 @@ with open("README.rst", "r") as fh:
 
 
 setup(
-    name="command-handler",
+    name="commandler",
     author="Peter.Harding",
     author_email="plh@performiq.com",
     packages=find_packages(),
@@ -14,7 +14,7 @@ setup(
     description="A small tool for registering command actions and executing using a text string.",
     license='MIT',
     long_description=long_description,
-    url="https://github.com/performiq/command",
+    url="https://github.com/performiq/commandler",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
