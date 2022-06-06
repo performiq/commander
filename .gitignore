@@ -1,3 +1,20 @@
+
+# Archives
+*.gz
+*.rar
+*.tar
+*.tz
+*.zip
+
+# IDEs
+.vscode/
+.idea/
+
+# Just ignore
+*.ignore
+*.x
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
