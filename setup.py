@@ -9,13 +9,13 @@ setup(
     name="commandler",
     author="Peter.Harding",
     author_email="plh@performiq.com",
-    packages=find_packages(),
-    version="1.0.0",
+    version="1.0.1",
     description="A small tool for registering command actions and executing using a text string.",
-    license='MIT',
     long_description=long_description,
+    packages=find_packages(),
+    license='MIT',
     url="https://github.com/performiq/commandler",
-    classifiers=[
+    classifiers = [
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",

@@ -39,9 +39,11 @@ class Node:
 
 # =============================================================================
 
-COMMANDS = Node()
+command_list = []
 
-DEBUG    = False
+COMMANDS     = Node()
+
+DEBUG        = False
 
 
 # =============================================================================
@@ -51,22 +53,24 @@ def register(fn):
        This converts any string up to the first space into a command reference
     """
 
-    s = fn.__name__
+    fn_name = fn.__name__
 
-    print(f"Adding command - |{s}|")
+    command_list.append(fn_name)
 
-    node = COMMANDS
-    last = node
+    if DEBUG: print(f"Adding command - |{fn_name}|")
+
+    node         = COMMANDS
+    last_node    = node
     current_node = COMMANDS
 
-    depth = 0
+    depth        = 0
+    len_fn_name  = len(fn_name)
 
-    l = len(s)
+    for idx in range(len_fn_name):
 
-    for idx in range(l):
-       ch = s[idx]
+       ch = fn_name[idx]
 
-       # print(f"depth |{depth}| ch |{ch}|")
+       if DEBUG: print(f"depth |{depth:2}| ch |{ch}|")
 
        if depth > 0 and ch == ' ':
            last_node.func = fn
@@ -81,22 +85,22 @@ def register(fn):
        current_node   = current_node.children[ch]    # Recurse to the next level
        depth         += 1
 
-       if idx == l - 1:  # At end
+       if idx == len_fn_name - 1:  # At end
            current_node.func = fn
 
            if DEBUG:
-               print(f"  last_node children |{list(last_node.children)}|")
-               print(f"      last_node char |{last_node.char}|")
-               print(f"current_node chldren |{list(current_node.children)}|")
-               print(f"   current_node char |{current_node.char}|")
-               print(f"   current_node func |{current_node.func}|")
+               print(f"     last_node.children |{list(last_node.children)}|")
+               print(f"         last_node.char |{last_node.char}|")
+               print(f"   current_node.chldren |{list(current_node.children)}|")
+               print(f"      current_node.char |{current_node.char}|")
+               print(f"      current_node.func |{current_node.func}|")
 
     return fn
 
 
 # -----------------------------------------------------------------------------
 
-def execute(s):
+def execute(txt):
     """
        This works through the hash tree for a record matching the string provided and invokes that function
     """
@@ -105,23 +109,23 @@ def execute(s):
     last_node = None
     current = COMMANDS.children  # So a dict!
     depth   = 0
-    l       = len(s)
+    len_txt = len(txt)
 
-    for idx in range(l):
+    for idx in range(len_txt):
 
-       ch = s[idx]
+       ch = txt[idx]
 
-       print(f"depth |{depth}| ch |{ch}|")
+       if DEBUG: print(f"depth |{depth:2}| ch |{ch}|")
 
        if depth > 0 and ch == ' ':
            # print(last_node.func)
-           txt = s[idx+1:]
+           txt = txt[idx+1:]
            # print(f"Invoking from beginning of a string -  {txt}")
            last_node.func(txt)
            return
 
        if not ch in current:     # If there isn't a ch registered in the current level add it
-           print(f"Unable to locate command - {s}")
+           print(f"Unable to locate command corresponding to - {txt}")
            return
 
        last_node = current[ch]
@@ -129,7 +133,7 @@ def execute(s):
        current   = current[ch].children  # Recurse to the next level
        depth    += 1
 
-       if idx == l - 1:  # At end
+       if idx == len_txt - 1:  # At end
            node = last[ch]
 
            if DEBUG:
@@ -148,43 +152,23 @@ def func_name():
 
 # -----------------------------------------------------------------------------
 
-@register
-def something():
-    print(f"invoked - {func_name()}")
+def list_commands():
+    return command_list
 
 # -----------------------------------------------------------------------------
 
-register(something)
-
-# -----------------------------------------------------------------------------
-
-def test_functions():
-
-    print()
-    print("Invoking functions to test them")
-    print()
-
-    something()
-
-# -----------------------------------------------------------------------------
-
-def test_execution():
-    print()
-    print("Testing execution")
-    print()
-
-    execute('something')
-    execute('something comes')
-    execute('something comes and goes')
+def enable_debug():
+    global DEBUG
+    DEBUG = True
 
 # -----------------------------------------------------------------------------
 
 def main():
-    test_execution()
+    print("Run the example script")
 
 # -----------------------------------------------------------------------------
 
-if__name__== “__main__”:
+if __name__ == "__main__":
     main()
 
 # -----------------------------------------------------------------------------

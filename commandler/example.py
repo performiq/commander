@@ -9,74 +9,73 @@ import inspect
 from command import (
     register,
     execute,
-    func_name
+    enable_debug,
+    func_name,
+    list_commands,
 )
 
 # -----------------------------------------------------------------------------
 
 @register
 def one():
-    print(f"invoked - {func_name()}")
+    print(f"invoked - {func_name():20}")
 
 # -----------------------------------------------------------------------------
 
 @register
 def two():
-    print(f"invoked - {func_name()}")
+    print(f"invoked - {func_name():20}")
 
 # -----------------------------------------------------------------------------
 
 @register
 def three():
-    print(f"invoked - {func_name()}")
+    print(f"invoked - {func_name():20}")
 
 # -----------------------------------------------------------------------------
 
 @register
 def four():
-    print(f"invoked - {func_name()}")
+    print(f"invoked - {func_name():20}")
 
 # -----------------------------------------------------------------------------
 
 @register
 def slack():
-    print(f"invoked - {func_name()}")
+    print(f"invoked - {func_name():20}")
 
 # -----------------------------------------------------------------------------
 
-def something(s=None):
-    print(f"invoked - {func_name()}   with args - '{s}'")
+@register
+def something(args=None):
+    print(f"invoked - {func_name():20}   with args - '{args}'")
 
 # -----------------------------------------------------------------------------
 
 @register
 def test():
-    print(f"invoked - {func_name()}")
+    print(f"invoked - {func_name():20}")
 
 # -----------------------------------------------------------------------------
 
 @register
 def tasty():
-    print(f"invoked - {func_name()}")
+    print(f"invoked - {func_name():20}")
 
 # -----------------------------------------------------------------------------
 
 @register
 def testy():
-    print(f"invoked - {func_name()}")
+    print(f"invoked - {func_name():20}")
 
 # -----------------------------------------------------------------------------
 
-# register('one', one)
-# register('two', two)
-# register('three', three)
-# register('four', four)
+def otherthing(args=None):
+    print(f"invoked - {func_name():20}   with args - '{args}'")
 
-# register('test', test)
-# register('tasty', testy)
-# register('testy', testy)
-# register('slack', slack)
-register(something)
+# -----------------------------------------------------------------------------
+
+register(otherthing)
 
 # -----------------------------------------------------------------------------
 
@@ -95,6 +94,7 @@ def test_functions():
     testy()
     slack()
     something()
+    otherthing()
 
 # -----------------------------------------------------------------------------
 
@@ -109,9 +109,17 @@ def test_execution():
     execute('something')
     execute('something comes')
     execute('something comes and goes')
+    execute('otherthing came and went')
 
 # -----------------------------------------------------------------------------
 
-test_execution()
+def main():
+    test_execution()
 
 # -----------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    main()
+
+# -----------------------------------------------------------------------------
+
